@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background: linear-gradient(135deg, #4e6ef2, #ff4d4d);
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 450px;
+            margin: 60px auto;
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #4e6ef2;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        input {
+            width: 45%;
+            padding: 10px;
+            margin: 10px;
+            border: 2px solid #4e6ef2;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 16px;
+            color: #333;
+        }
+        input:focus {
+            outline: none;
+            border-color: #b7ffa7;
+            background-color: #ffebeb;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #4e6ef2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ff4d4d;
+        }
+        #result-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4e6ef2;
+        }
+        p {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+        #DOB {
+            font-style: italic;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculator</h1>
+        <form id="age-form">
+            <label for="birthdate" style="color: black;">Enter your birthdate:</label>
+            <input type="number" id="day" placeholder="DD" min="1" max="31" required autocomplete="off">
+            <input type="number" id="month" placeholder="MM" min="1" max="12" required autocomplete="off">
+            <input type="number" id="year" placeholder="YYYY" min="1900" max="2025" required autocomplete="off">
+        </form>
+        <div id="result-container">
+            <h2 id="result"></h2>
+            <p id="months"></p>
+            <p id="years"></p>
+            <p id="days"></p>
+            <p id="minutes"></p>
+            <p id="DOB"></p>
+        </div>
+        <footer>
+            <p style="color: black;">Created By Tavish</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById("day").addEventListener("input", function() {
+            if(this.value > 31) {
+                location.reload();
+            }
+            if (this.value.length === 2) {
+                document.getElementById("month").focus();
+            }
+        });
+
+        document.getElementById("month").addEventListener("input", function() {
+            if(this.value > 31) {
+                location.reload();
+            }
+            if (this.value.length === 2) {
+                document.getElementById("year").focus();
+            }
+        });
+
+        document.getElementById("year").addEventListener("input", function() {
+            if(this.value >= 10000) {
+                location.reload();
+            }
+            if (this.value.length === 4) {
+                calculateAge();
+            }
+            const date = new Date();
+            if(this.value >= date.getFullYear()) {
+                location.reload();
+            }
+        });
+
+        function calculateAge() {
+            var day = parseInt(document.getElementById("day").value);
+            var month = parseInt(document.getElementById("month").value) - 1; // JavaScript months are 0-based
+            var year = parseInt(document.getElementById("year").value);
+            
+            if (isNaN(day) || isNaN(month) || isNaN(year)) {
+                alert("Please enter a valid date!");
+                return;
+            }
+            
+            var birthdate = new Date(year, month, day);
+            var today = new Date();
+            var age = today.getFullYear() - birthdate.getFullYear();
+            var months = today.getMonth() - birthdate.getMonth();
+            var days = today.getDate() - birthdate.getDate();
+            var minutes = Math.floor((today - birthdate) / (1000 * 60));
+
+            if (months < 0 || (months === 0 && today.getDate() < birthdate.getDate())) {
+                age--;
+                months += 12;
+            }
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+
+            var date = document.getElementById("day").value;
+            var month = document.getElementById("month").value;
+            var year = document.getElementById("year").value;
+            
+            document.getElementById("DOB").textContent = "Your DOB is " + date + "/ " + month + " / " + year;
+            document.getElementById("result").textContent = "You are " + age + " years old.";
+            document.getElementById("months").textContent = "Months: " + months;
+            document.getElementById("years").textContent = "Years: " + age;
+            document.getElementById("days").textContent = "Days: " + days;
+            document.getElementById("minutes").textContent = "Minutes: " + minutes;
+        }
+    </script>
+</body>
+</html>

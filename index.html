@@ -157,7 +157,7 @@
     <script>
         var count =0;
         document.getElementById("day").addEventListener("input", function() {
-            if(this.value > 31||this.value===00) {
+            if(this.value > 31||this.value=="00") {
                 if(count===1){
                     location.reload;
                 }

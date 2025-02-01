@@ -157,7 +157,7 @@
     <script>
         var count =0;
         document.getElementById("day").addEventListener("input", function() {
-            if(this.value > 31||this.value<1) {
+            if(this.value > 31||this.value===00) {
                 if(count===1){
                     location.reload;
                 }
@@ -169,7 +169,7 @@
         });
 
         document.getElementById("month").addEventListener("input", function() {
-            if(this.value > 12||this.value<1) {
+            if(this.value > 12||this.value===00) {
                 location.reload();
             }
             if (this.value.length === 2) {
@@ -178,7 +178,7 @@
         });
 
         document.getElementById("year").addEventListener("input", function() {
-            if(this.value >= 9999||this.value<1) {
+            if(this.value >= 9999||this.value===00) {
                 location.reload();
             }
             if (this.value.length === 4) {

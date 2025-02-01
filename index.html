@@ -155,8 +155,12 @@
         </footer>
     </div>
     <script>
+        var count =0;
         document.getElementById("day").addEventListener("input", function() {
-            if(this.value > 31) {
+            if(this.value > 31||this.value<1) {
+                if(count===1){
+                    location.reload;
+                }
                 location.reload();
             }
             if (this.value.length === 2) {
@@ -165,7 +169,7 @@
         });
 
         document.getElementById("month").addEventListener("input", function() {
-            if(this.value > 12) {
+            if(this.value > 12||this.value<1) {
                 location.reload();
             }
             if (this.value.length === 2) {
@@ -174,7 +178,7 @@
         });
 
         document.getElementById("year").addEventListener("input", function() {
-            if(this.value >= 10000) {
+            if(this.value >= 9999||this.value<1) {
                 location.reload();
             }
             if (this.value.length === 4) {
@@ -222,7 +226,9 @@
             document.getElementById("years").textContent = "Years: " + age;
             document.getElementById("days").textContent = "Days: " + days;
             document.getElementById("minutes").textContent = "Minutes: " + minutes;
+            count++;
         }
+        
     </script>
 </body>
 </html>
